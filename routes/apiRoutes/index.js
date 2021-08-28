@@ -16,12 +16,9 @@ router.post('/notes', (req, res) => {
 });
 
 router.delete('/notes/:id', (req, res) => {
-    let noteData = readData();
-    const noteId = req.params.id;
-    const newNoteData = noteData.filter((note) => note.id != noteId);
-    
-    writeData(newNoteData);
-    res.send(newNoteData);
+    const { id } = req.params;
+    const noteD = deleteNote(id, noteData);
+    res.json(noteData);
 });
 
 // creates note
@@ -31,8 +28,21 @@ function createNote(body, noteD) {
 
     fs.writeFileSync(
         path.join(__dirname, '../../db/db.json'),
-        JSON.stringify({ noteData:noteD }, null, 2)
+        JSON.stringify({ noteData: noteD }, null, 2)
     );
     return note;
 }
+
+function deleteNote(id, noteD) {
+    const deletedData = noteD.find(note => note.id === id)
+    if (deletedData) {
+        noteData = noteD.filter(note => note.id != id)
+    }
+    fs.writeFileSync(
+        path.join(__dirname, '../../db.json'),
+        JSON.stringify({ noteData }, null, 2)
+    );
+    return id;
+}
+
 module.exports = router;
