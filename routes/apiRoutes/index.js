@@ -24,6 +24,7 @@ router.delete('/notes/:id', (req, res) => {
     res.send(newNoteData);
 });
 
+// creates note
 function createNote(body, noteD) {
     const note = body;
     noteD.push(note);
