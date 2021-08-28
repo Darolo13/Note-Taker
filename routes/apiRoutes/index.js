@@ -1,5 +1,7 @@
 const path = require('path');
 const fs = require('fs');
+const router = require('express').Router();
+
 let noteCount = 1;
 
 const readData = () => {
@@ -15,13 +17,12 @@ const writeData = (noteData) => {
 
 const newNoteId = () => noteId++;
 
-module.exports = function (app) {
-    app.get('/api/notes', (req, res) => {
+    router.get('/notes', (req, res) => {
         let noteData = readData();
         res.json(noteData)
     })
 
-    app.post('/api/notes', (req, res) => {
+    router.post('/notes', (req, res) => {
         let noteData = readData();
         let newNote = req.body;
         let lastNoteId = !noteData[0] ? 0 : noteData[noteData.length - 1].id;
@@ -33,7 +34,7 @@ module.exports = function (app) {
         return res.json(noteData)
     })
 
-    app.delete('/api/notes/:id', (req, res) => {
+    router.delete('/notes/:id', (req, res) => {
         let noteData = readData();
         const noteId = req.params.id;
         const newNoteData = noteData.filter((note) => note.id != noteId);
@@ -41,4 +42,5 @@ module.exports = function (app) {
         writeData(newNoteData);
         res.send(newNoteData);
     })
-}
+
+    module.exports = router;
