@@ -45,4 +45,5 @@ function deleteNote(id, noteD) {
     return id;
 }
 
+// exports routes to server.js
 module.exports = router;
