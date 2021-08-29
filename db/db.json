@@ -1,3 +1,9 @@
 {
-  "noteData": []
+  "noteData": [
+    {
+      "title": "Example note",
+      "text": "With note taker you can create notes that fit your needs :), enjoy!.",
+      "id": "0"
+    }
+  ]
 }
